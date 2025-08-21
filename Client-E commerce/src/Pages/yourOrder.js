@@ -18,33 +18,49 @@ const OrderItemList = () => {
   }, [dispatch]);
 
   if (loading) return <LoaderComponent />;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p className={styles.order_container}>Error: {error}</p>;
 
-  const orderList = orderedItems.yourOrders || [];
+  const orderList = orderedItems || [];
 
   return (
     <div className={styles.order_container}>
       <Header />
       <ul className={styles.orderList}>
         {orderList.length > 0 ? (
-          orderList.map((order, index) => (
-            <li
-              key={index}
-              className={styles.orderCard}
-              onClick={() => navigate(`/orderucts/${order._id}`)}
-            >
-              <img
-                src={order.image}
-                alt={order.title}
-                className={styles.orderImage}
-              />
-              <div className={styles.orderDetails}>
-                <h2 className={styles.orderTitle}>{order.title}</h2>
-                <p className={styles.orderPrice}>Price: {order.price}$</p>
-                <p className={styles.orderRating}>Ratings: {order.rating}</p>
-              </div>
-            </li>
-          ))
+          orderList.map((order, index) => {
+            const date = new Date(order.created_at);
+            const formattedDate = date.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+            const formattedTime = date.toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+
+            return (
+              <li
+                key={index}
+                className={styles.orderCard}
+                onClick={() => navigate(`/products/${order._id}`)}
+              >
+                <img
+                  src={order.image}
+                  alt={order.title}
+                  className={styles.orderImage}
+                />
+                <div className={styles.orderDetails}>
+                  <h2 className={styles.orderTitle}>{order.title}</h2>
+                  <p className={styles.orderPrice}>Price: {order.price}$</p>
+                  <p className={styles.orderStatus}>Status: {order.status}</p>
+                  <p className={styles.orderDate}>
+                    Date: {formattedDate} at {formattedTime}
+                  </p>
+                </div>
+              </li>
+            );
+          })
         ) : (
           <p className={styles.noordersFound}>No Ordered items found.</p>
         )}

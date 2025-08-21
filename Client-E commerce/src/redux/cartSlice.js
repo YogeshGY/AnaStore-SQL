@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { logout } from "./auth";
 
-const userCartApi = "http://localhost:3000/user";
+const userCartApi = "http://localhost:3000/getCartitems";
 const addToCartItems = "http://localhost:3000/addCartItemInUserDetails";
 const removeCartApi = "http://localhost:3000/EmptyUserCart";
 
@@ -11,10 +11,12 @@ const getUserId = () => Cookies.get("userId");
 
 export const getCartItems = createAsyncThunk("cart/getCartItems", async () => {
   const userId = getUserId();
+
   if (!userId) {
     return { user: { userDatas: { cartList: [] } } };
   }
   const response = await axios.get(`${userCartApi}/${userId}`);
+  console.log(response.data);
   return response.data;
 });
 
@@ -26,6 +28,7 @@ export const addItemCart = createAsyncThunk(
       throw new Error("User not logged in");
     }
     const response = await axios.put(`${addToCartItems}/${userId}`, cartItem);
+    console.log(response.data);
     return response.data;
   }
 );

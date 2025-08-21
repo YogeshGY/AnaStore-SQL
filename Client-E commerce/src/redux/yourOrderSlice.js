@@ -2,8 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const orderHistoryApi = "http://localhost:3000/yourOrders";
-const getorderApi = "http://localhost:3000/userorders";
+const orderApi = "http://localhost:3000/orders";
 
 const getUserId = () => Cookies.get("userId");
 
@@ -11,11 +10,9 @@ export const getorderItems = createAsyncThunk(
   "yourOrder/getorderItems",
   async () => {
     const userId = getUserId();
-    if (!userId) {
-      return [];
-    }
-    const response = await axios.get(`${getorderApi}/${userId}`);
-    return response.data || [];
+    if (!userId) return [];
+    const response = await axios.get(`${orderApi}/user/${userId}`);
+    return response.data?.orders || [];
   }
 );
 
@@ -23,14 +20,9 @@ export const orderHistory = createAsyncThunk(
   "yourOrder/orderHistory",
   async (orderItems) => {
     const userId = getUserId();
-    if (!userId) {
-      throw new Error("User not logged in");
-    }
-    const response = await axios.put(
-      `${orderHistoryApi}/${userId}`,
-      orderItems
-    );
-    return response.data?.user?.userDatas?.yourOrders || [];
+    if (!userId) throw new Error("User not logged in");
+    const response = await axios.post(`${orderApi}/${userId}`, orderItems);
+    return response.data?.orders || [];
   }
 );
 

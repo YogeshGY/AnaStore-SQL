@@ -57,6 +57,7 @@
   font-size: 1rem;
   font-weight: 600;
   color: #1e293b;
+  margin: 0px;
   margin-bottom: 2px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -70,10 +71,17 @@
   margin: 2px 0;
 }
 
-.orderRating {
+.orderStatus {
   font-size: 0.85rem;
   font-weight: 500;
-  color: #f59e0b;
+  color: #1d9bda;
+  margin: 2px;
+}
+
+.orderDate{
+  margin: 0px;
+  font-size: 10px;
+  color: #64748b;
 }
 
 .noordersFound {
@@ -88,12 +96,11 @@
 /* Responsive */
 @media (max-width: 576px) {
   .orderList {
-    gap: 12px;
-    justify-content: center;
+    gap: 8px;
   }
 
   .orderCard {
-    width: 140px;
+    width: 124px;
     max-height: 280px;
   }
 
@@ -109,7 +116,7 @@
     font-size: 0.75rem;
   }
 
-  .orderRating {
+  .orderStatus {
     font-size: 0.7rem;
   }
 }

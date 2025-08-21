@@ -39,6 +39,7 @@ const Popup = ({ onClose, updateId }) => {
       dispatch(updateProduct({ _id: updateId, updatedData }))
         .unwrap()
         .then(() => {
+          alert("Product updated successfully");
           onClose();
         });
     } else {

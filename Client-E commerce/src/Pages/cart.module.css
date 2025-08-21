@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
   padding: 10px;
   box-sizing: border-box;
   min-height: 100vh;
@@ -139,6 +138,38 @@
   margin-left: 35%;
   margin-top: auto;
   align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.goToShopmore {
+  background: none;
+  color: #205b9d;
+  border: none;
+  outline: none;
+  transition: transform 0.2s;
+  align-self: flex-start;
+  margin: 0px;
+  margin-left: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.goToShopButton {
+  background-color: #205b9d;
+  color: white;
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+
+.goToShopButton:hover {
+  transform: scaleX(1.05) scaleY(1.1);
 }
 
 .checkout {
@@ -167,12 +198,11 @@
 
 @media (max-width: 576px) {
   .cartList {
-    gap: 12px;
-    justify-content: center;
+    gap: 8px;
   }
 
   .cartCard {
-    width: 140px;
+    width: 124px;
     max-height: 280px;
   }
 

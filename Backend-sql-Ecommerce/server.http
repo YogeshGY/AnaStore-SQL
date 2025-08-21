@@ -1,3 +1,14 @@
 ### get sample data
 
 GET http://localhost:3000/products
+
+
+###login
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email" : "user@gmail.com",
+    "password": "user"
+}

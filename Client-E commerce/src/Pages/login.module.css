@@ -112,6 +112,16 @@
   font-weight: 500;
 }
 
+.isRegisterButton{
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0px;
+  margin-top: 20px;
+  color: #43699f;
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .loginpage_container {
     flex-direction: column;

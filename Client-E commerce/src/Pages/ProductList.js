@@ -66,7 +66,7 @@ const ProductList = () => {
   });
 
   if (loading) return <LoaderComponent />;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p className={styles.product_container}>Error: {error}</p>;
 
   return (
     <div className={styles.product_container}>

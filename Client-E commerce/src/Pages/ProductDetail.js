@@ -103,7 +103,7 @@ const ProductDetails = () => {
   };
 
   if (loading) return <LoaderComponent />;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p className={styles.detailsContainer}>Error: {error}</p>;
   if (!product) return <p>Product not found</p>;
 
   const inCart = items.find((item) => item._id === product._id);

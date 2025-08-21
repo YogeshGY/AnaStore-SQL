@@ -78,8 +78,8 @@ const Cart = () => {
     dispatch(emptyCart());
   };
 
-  if (loading) return <LoaderComponent/>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <LoaderComponent />;
+  if (error) return <p className={styles.cart_container}>Error: {error}</p>;
 
   return (
     <div className={styles.cart_container}>
@@ -91,6 +91,17 @@ const Cart = () => {
           onClick={() => dispatch(emptyCart())}
         >
           Empty Cart
+        </button>
+      )}
+      {items.length > 0 && (
+        <button
+          className={styles.goToShopmore}
+          type="button"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Shop for More items
         </button>
       )}
       <ul className={styles.cartList}>
@@ -143,7 +154,16 @@ const Cart = () => {
           ))
         ) : (
           <p className={styles.emptyCart}>
-            Your cart is empty <br /> Add Somthing into theCart !
+            Your cart is empty <br /> Add Somthing into theCart !{" "}
+            <button
+              className={styles.goToShopButton}
+              type="button"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Go to Shop
+            </button>
           </p>
         )}
       </ul>

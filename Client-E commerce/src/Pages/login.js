@@ -7,9 +7,11 @@ import { setUserDatas, getCartItems } from "../redux/cartSlice";
 import cookies from "js-cookie";
 
 const Login = () => {
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isRegister, setIsRegister] = useState(true);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,6 +21,10 @@ const Login = () => {
   const userDatas = useSelector((state) => state.auth.userDatas);
 
   const token = cookies.get("jwtToken") ? true : false;
+
+  const handleRegistration = () => {
+    setIsRegister(!isRegister);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,13 +46,31 @@ const Login = () => {
     );
   }
 
+  if (error)
+    return <p className={styles.loginpage_container}>Error: {error}</p>;
+
   return (
     <div className={styles.loginpage_container}>
       <div className={styles.login_card}>
         <h2 className={styles.login_heading}>AnaStore</h2>
         <form className={styles.form_container} onSubmit={handleSubmit}>
+          {!isRegister && (
+            <>
+              {" "}
+              <label htmlFor="username" className={styles.input_label}>
+                USER NAME
+              </label>
+              <input
+                id="username"
+                value={userName}
+                type="text"
+                onChange={(e) => setUserName(e.target.value)}
+                className={styles.login_input}
+              />
+            </>
+          )}
           <label htmlFor="email" className={styles.input_label}>
-            USER NAME
+            Email
           </label>
           <input
             id="email"
@@ -72,7 +96,7 @@ const Login = () => {
             className={styles.login_button}
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Logging in..." : isRegister ? "Login" : "Register"}
           </button>
 
           {errorMessage && (
@@ -80,6 +104,12 @@ const Login = () => {
           )}
           {error && <p className={styles.error_message}>{error}</p>}
         </form>
+        <button
+          className={styles.isRegisterButton}
+          onClick={handleRegistration}
+        >
+          {isRegister ? "Register Here" : "Login"}
+        </button>
       </div>
     </div>
   );

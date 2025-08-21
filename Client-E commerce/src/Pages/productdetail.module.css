@@ -167,9 +167,12 @@
   .details {
     grid-template-columns: 1fr;
     text-align: center;
-    padding: 30px;
+    padding: 10px;
   }
 
+  .detailsImage{
+    max-width: 95%;
+  }
   .detailsContent {
     align-items: center;
   }

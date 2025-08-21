@@ -15,6 +15,7 @@ const Header = () => {
     if (token) {
       cookies.remove("jwtToken");
       cookies.remove("userId");
+      cookies.remove("userRole")
       dispatch(logout());
       navigate("/login");
     } else {
