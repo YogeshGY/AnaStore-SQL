@@ -160,6 +160,9 @@
 .productRating {
   font-size: 0.85rem;
   color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 2px;
 }
 
 .noProductsFound {

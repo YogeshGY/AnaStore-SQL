@@ -7,9 +7,17 @@ const loginAPI = "http://localhost:3000/login";
 
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async (credentials) => {
-    const response = await axios.post(registerApi, credentials);
-    return response.data;
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(registerApi, credentials);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue("Network error or server not reachable");
+      }
+    }
   }
 );
 
@@ -49,6 +57,7 @@ const authReducer = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // login
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -63,7 +72,20 @@ const authReducer = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload || action.error.message || "Login failed";
+        state.error = action.payload || "Login failed";
+      })
+      // register
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Registration failed";
       });
   },
 });

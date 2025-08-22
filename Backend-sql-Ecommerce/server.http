@@ -1,7 +1,12 @@
-### get sample data
+##register
+POST http://localhost:3000/register
+Content-Type: application/json
 
-GET http://localhost:3000/products
-
+{
+    "name" : "yogesh",
+    "email" : "yogesshrutil@gmail.com",
+    "password": "yogesh"
+}
 
 ###login
 

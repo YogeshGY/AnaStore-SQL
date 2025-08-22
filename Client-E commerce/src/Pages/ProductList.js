@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router";
 import Header from "../Components/Header";
 import Popup from "../Components/popup";
 import { getCartItems } from "../redux/cartSlice";
+import { FaStar } from "react-icons/fa";
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -125,7 +126,10 @@ const ProductList = () => {
                   <h2 className={styles.productTitle}>{prod.title}</h2>
                   <p className={styles.productPrice}>Price: {prod.price}$</p>
 
-                  <p className={styles.productRating}>Ratings: {prod.rating}</p>
+                  <p className={styles.productRating}>
+                    Ratings: {prod.rating}
+                    <FaStar />
+                  </p>
                 </div>
               </li>
             );

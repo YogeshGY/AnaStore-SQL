@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./login.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../redux/auth";
+import { loginUser, registerUser } from "../redux/auth";
 import { useNavigate, Navigate } from "react-router-dom";
 import { setUserDatas, getCartItems } from "../redux/cartSlice";
 import cookies from "js-cookie";
@@ -11,6 +11,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [isRegister, setIsRegister] = useState(true);
 
   const dispatch = useDispatch();
@@ -24,19 +25,45 @@ const Login = () => {
 
   const handleRegistration = () => {
     setIsRegister(!isRegister);
+    setErrorMessage("");
+    setSuccessMessage("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
+    setSuccessMessage("");
 
-    try {
-      const result = await dispatch(loginUser({ email, password })).unwrap();
-      dispatch(setUserDatas(result));
-      dispatch(getCartItems());
-      navigate(result.role === "admin" ? "/admin" : "/");
-    } catch (err) {
-      setErrorMessage(err || "Login failed");
+    if (isRegister) {
+      try {
+        if (email === "" || password === "") {
+          setErrorMessage("Please fill the all fields");
+          return;
+        }
+        const result = await dispatch(loginUser({ email, password })).unwrap();
+        dispatch(setUserDatas(result));
+        dispatch(getCartItems());
+        navigate(result.role === "admin" ? "/admin" : "/");
+      } catch (err) {
+        setErrorMessage(err?.message || err || "Login failed");
+      }
+    } else {
+      try {
+        if (userName === "" || email === "" || password === "") {
+          setErrorMessage("Please fill the all fields");
+          return;
+        }
+        await dispatch(
+          registerUser({ name: userName, email, password })
+        ).unwrap();
+        setSuccessMessage("Registration successful! Please login.");
+        setIsRegister(true);
+        setUserName("");
+        setEmail("");
+        setPassword("");
+      } catch (err) {
+        setErrorMessage(err?.message);
+      }
     }
   };
 
@@ -46,9 +73,6 @@ const Login = () => {
     );
   }
 
-  if (error)
-    return <p className={styles.loginpage_container}>Error: {error}</p>;
-
   return (
     <div className={styles.loginpage_container}>
       <div className={styles.login_card}>
@@ -56,7 +80,6 @@ const Login = () => {
         <form className={styles.form_container} onSubmit={handleSubmit}>
           {!isRegister && (
             <>
-              {" "}
               <label htmlFor="username" className={styles.input_label}>
                 USER NAME
               </label>
@@ -96,14 +119,26 @@ const Login = () => {
             className={styles.login_button}
             disabled={loading}
           >
-            {loading ? "Logging in..." : isRegister ? "Login" : "Register"}
+            {loading ? "Processing..." : isRegister ? "Login" : "Register"}
           </button>
 
-          {errorMessage && (
-            <p className={styles.error_message}>{errorMessage}</p>
+          {successMessage && (
+            <p className={styles.success_message}>{successMessage}</p>
           )}
-          {error && <p className={styles.error_message}>{error}</p>}
+
+          {errorMessage ? (
+            <p className={styles.error_message}>
+              {typeof errorMessage === "string"
+                ? errorMessage
+                : errorMessage?.message}
+            </p>
+          ) : error ? (
+            <p className={styles.error_message}>
+              {typeof error === "string" ? error : error?.message}
+            </p>
+          ) : null}
         </form>
+
         <button
           className={styles.isRegisterButton}
           onClick={handleRegistration}
