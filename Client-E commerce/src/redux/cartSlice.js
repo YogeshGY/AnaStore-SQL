@@ -16,7 +16,6 @@ export const getCartItems = createAsyncThunk("cart/getCartItems", async () => {
     return { user: { userDatas: { cartList: [] } } };
   }
   const response = await axios.get(`${userCartApi}/${userId}`);
-  console.log(response.data);
   return response.data;
 });
 

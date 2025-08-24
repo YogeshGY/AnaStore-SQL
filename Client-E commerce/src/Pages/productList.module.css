@@ -15,11 +15,11 @@
   flex-wrap: wrap;
   width: 100%;
   gap: 12px;
-  justify-content: center;
   align-items: center;
   overflow-x: auto;
   z-index: 1;
   margin-top: 10px;
+  margin-left: 20px;
 }
 
 .searchInput {

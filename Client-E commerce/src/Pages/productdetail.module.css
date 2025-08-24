@@ -94,6 +94,81 @@
   margin-top: 10px;
 }
 
+.updateForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.updateTitle {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #1e293b;
+  outline: none;
+  background: none;
+  border: none;
+}
+
+.updatedescription {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #475569;
+  margin: 0px;
+  outline: none;
+  background: none;
+  border: none;
+}
+
+.updateprice {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #16a34a;
+  margin: 12px 0;
+  outline: none;
+  background: none;
+  border: none;
+}
+
+.updaterating {
+  display: inline-block;
+  color: #ca8a04;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 10px 0;
+  outline: none;
+  background: none;
+  border: none;
+}
+
+.updatestockin {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #15803d;
+  margin: 10px 0;
+  outline: none;
+  background: none;
+  border: none;
+}
+
+.updatestockout {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #b91c1c;
+  margin: 10px 0;
+  outline: none;
+  background: none;
+  border: none;
+}
+
+.Updaterating {
+  display: inline-block;
+  color: #ca8a04;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 10px 0;
+  outline: none;
+  background: none;
+  border: none;
+}
 .ProductCartaction_buttons {
   width: 44px;
   height: 44px;
@@ -170,7 +245,7 @@
     padding: 10px;
   }
 
-  .detailsImage{
+  .detailsImage {
     max-width: 95%;
   }
   .detailsContent {

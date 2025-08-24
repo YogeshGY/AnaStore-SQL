@@ -5,6 +5,9 @@ const productApi = "http://localhost:3000/products";
 const addProductApi = "http://localhost:3000/addProduct";
 const deleteProductApi = "http://localhost:3000/deleteproduct";
 const updateProductApi = "http://localhost:3000/updateproduct";
+const searchApi = "http://localhost:3000/searchProductApi";
+const getCategoryApi = "http://localhost:3000/searchProductCategory";
+const searchProductbyCategory = "http://localhost:3000/searchProductbyCategory";
 
 export const fetchProducts = createAsyncThunk(
   "product/fetchProducts",
@@ -57,10 +60,35 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
+export const getCategory = createAsyncThunk(
+  "product/getCategoryApi",
+  async () => {
+    const response = await axios.get(getCategoryApi);
+    return response.data.categories;
+  }
+);
+
+export const searchProduct = createAsyncThunk(
+  "product/searchProduct",
+  async ({ searchTerm }) => {
+    const response = await axios.get(`${searchApi}/${searchTerm}`);
+    return response.data.product;
+  }
+);
+
+export const categorySearchProduct = createAsyncThunk(
+  "product/searchProductbyCategory",
+  async ({ category }) => {
+    const response = await axios.get(`${searchProductbyCategory}/${category}`);
+    return response.data.product;
+  }
+);
+
 const productSlice = createSlice({
   name: "product",
   initialState: {
     items: [],
+    categories: [],
     loading: false,
     error: null,
   },
@@ -87,7 +115,7 @@ const productSlice = createSlice({
       .addCase(addProductAdmin.fulfilled, (state, action) => {
         state.loading = false;
         if (action.payload) {
-          state.items.push(action.payload); 
+          state.items.push(action.payload);
         }
       })
       .addCase(addProductAdmin.rejected, (state, action) => {
@@ -124,8 +152,45 @@ const productSlice = createSlice({
       .addCase(deleteProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(searchProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(searchProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload || [];
+      })
+      .addCase(searchProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getCategory.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.categories = ["All", ...action.payload] || [];
+      })
+      .addCase(getCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(categorySearchProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(categorySearchProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload || [];
+      })
+      .addCase(categorySearchProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
+  
 });
 
 export default productSlice.reducer;

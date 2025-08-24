@@ -1,6 +1,6 @@
 .popup {
   position: fixed;
-  top: 50%;
+  top: 450%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #f4f3f3;
@@ -70,6 +70,13 @@
 .addProduct_button:hover {
   background-color: #35ff50;
   color: #333;
+}
+
+.popupButtons {
+  display: flex;
+
+  align-items: center;
+  gap: 1rem;
 }
 
 @media (max-width: 400px) {

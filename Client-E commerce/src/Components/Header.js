@@ -1,26 +1,38 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 import cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/auth";
+import Popup from "./popup";
+import { useState } from "react";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = cookies.get("jwtToken") ? true : false;
   const userRole = cookies.get("userRole");
+  const location = useLocation();
+  const [showPopup, setShowPopup] = useState(false);
   const { items } = useSelector((state) => state.cart);
 
   const handleLogout = () => {
     if (token) {
       cookies.remove("jwtToken");
       cookies.remove("userId");
-      cookies.remove("userRole")
+      cookies.remove("userRole");
       dispatch(logout());
       navigate("/login");
     } else {
       navigate("/");
     }
+  };
+
+  const addProduct = () => {
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
   };
 
   const cartItemCount = items.reduce(
@@ -53,13 +65,32 @@ const Header = () => {
               <span className={styles.cartBadge}>{cartItemCount}</span>
             )}
           </li>
-          <li className={styles.cartLink}
-          onClick={()=>{navigate("/yourOrders")}}>Your Orders</li>
+          <li
+            className={styles.cartLink}
+            onClick={() => {
+              navigate("/yourOrders");
+            }}
+          >
+            Your Orders
+          </li>
+          <li>
+            {location.pathname === "/admin" && (
+              <button
+                type="button"
+                className={styles.addtocart_button}
+                onClick={addProduct}
+              >
+                Add Product
+              </button>
+            )}
+          </li>
         </ul>
       </nav>
+
       <button type="button" onClick={handleLogout}>
         Logout
       </button>
+      {showPopup && <Popup onClose={closePopup} />}
     </header>
   );
 };

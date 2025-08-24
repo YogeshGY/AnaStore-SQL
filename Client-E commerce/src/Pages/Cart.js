@@ -73,7 +73,7 @@ const Cart = () => {
 
   const paymentDone = () => {
     alert("Payment Successful");
-    dispatch(orderHistory(...items));
+    dispatch(orderHistory(items));
     console.log("details add in your cart");
     dispatch(emptyCart());
   };
