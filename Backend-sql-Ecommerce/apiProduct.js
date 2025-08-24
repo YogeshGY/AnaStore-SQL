@@ -190,4 +190,36 @@ router.get("/products/:_id", async (req, res) => {
   }
 });
 
+router.get("/searchProductApi/:searchTerm", async (req, res) => {
+  const { searchTerm } = req.params;
+  const sql = "SELECT * FROM product WHERE title LIKE ?";
+  try {
+    const [rows] = await db.query(sql, [`%${searchTerm}%`]);
+    res.status(200).json({ product: rows });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+router.get("/searchProductCategory", async (req, res) => {
+  try {
+    const [rows] = await db.query("SELECT DISTINCT category FROM product");
+    res.status(200).json({ categories: rows.map((r) => r.category) });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+router.get("/searchProductbyCategory/:category", async (req, res) => {
+  const { category } = req.params;
+  try {
+    const [rows] = await db.query("SELECT * FROM product WHERE category=?", [
+      category,
+    ]);
+    res.status(200).json({ product: rows });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
 export default router;
