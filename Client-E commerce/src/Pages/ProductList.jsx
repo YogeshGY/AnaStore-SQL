@@ -107,7 +107,7 @@ const ProductList = () => {
                 <h2 className={styles.productTitle}>{prod.title}</h2>
                 <p className={styles.productPrice}>Price: {prod.price}$</p>
                 <p className={styles.productRating}>
-                  Ratings: {prod.rating}
+                  Ratings: {parseFloat(prod.rating)}
                   <FaStar />
                 </p>
               </div>

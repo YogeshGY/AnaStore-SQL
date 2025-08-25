@@ -19,6 +19,9 @@ Content-Type: application/json
 }
 
 
+### userByID
+GET http://localhost:3000/user/262d1b2d-43f3-4cc0-b328-59e63704ec8b
+
 ### search procust
 
 GET http://localhost:3000/searchProductbyCategory/jewelery

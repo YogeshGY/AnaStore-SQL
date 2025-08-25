@@ -64,7 +64,7 @@ const ProductDetails = () => {
       setCategory(product.category);
       setInStock(product.inStock);
       setDescription(product.description);
-      setRating(product.rating);
+      setRating(parseFloat(product.rating));
     }
   }, [product]);
 
@@ -149,7 +149,7 @@ const ProductDetails = () => {
               <h1>{product.title}</h1>
               <p className={styles.description}>{product.description}</p>
               <p className={styles.price}>Price: {product.price}$</p>
-              <p className={styles.rating}>Rating: {product.rating}</p>
+              <p className={styles.rating}>Rating: {parseFloat(product.rating)}</p>
               <p className={product.inStock ? styles.stockin : styles.stockout}>
                 {product.inStock
                   ? `Items Left: ${product.inStock}`
